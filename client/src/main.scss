@@ -1,0 +1,16 @@
+@import "scss/base/reset";
+
+//scss components
+@import "scss/components/navbar";
+@import "scss/components/account";
+
+//scss variables
+@import "scss/abstracts/variables";
+@import "scss/abstracts/mixin";
+
+//scss utils
+@import "scss/utils/utils.scss";
+
+//scss layout
+@import "scss/layout/grid"; 
+
