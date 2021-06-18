@@ -5,6 +5,7 @@ import Register from "./components/auth/Register"
 import Login from "./components/auth/Login"
 import Navbar from "./components/Navbar";
 import Store from "./store/index";
+import Dashboard from "./components/Dashboard";
 import "./main.scss";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/dashboard" component={Dashboard} />
 
         </Switch>
       </Router>

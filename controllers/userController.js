@@ -19,6 +19,7 @@ module.exports.registerValidations = [
 
 module.exports.register = async (req, res)=>{
     const {name, email, password} = req.body;
+    
     const errors = validationResult(req);
 
     if(!errors.isEmpty()){
@@ -28,7 +29,7 @@ module.exports.register = async (req, res)=>{
         
         const checkUser = await User.findOne({email})
         if(checkUser){
-            return res.status(400).json({error: [{msg:  "Email is already taken"}]})
+            return res.status(400).json({errors: [{msg:  "Email is already taken"}]})
         }
         //Password Hash
         const salt = await bcrypt.genSalt(10);
@@ -39,7 +40,7 @@ module.exports.register = async (req, res)=>{
             const user = await User.create({
                 name,
                 email,
-                password: hash
+                password: hash,
             });
             
             const token = createToken(user);

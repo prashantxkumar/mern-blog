@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import toast, {Toaster} from "react-hot-toast";
-
-const Register = ()=>{
+import { postRegister } from "../../store/asyncMethods/AuthMethods"
+const Register = (props)=>{
 
     const [state, setData]=useState({
         name:"",
@@ -22,42 +21,32 @@ const Register = ()=>{
             }
           })
       }
-    const {loading, registerErrors} = useSelector((state)=>state.AuthReducer);
+    const {loading, registerErrors, user} = useSelector((state)=>state.AuthReducer);
     const dispatch = useDispatch();
 
-    // useEffect(()=>{
-    //     if(registerErrors.length > 0){
-    //         registerErrors.map(error =>{
-    //             toast.error(error.msg);
-    //         })
-    //     }
-    // }, [registerErrors]);
+    useEffect(()=>{
+        
+        if(registerErrors.length > 0){
+            registerErrors.map(error => {
+                toast.error(error.msg);
+            })
+        }
+        
+        if(user){
+            props.history.push('/dashboard');
+        }
+
+    }, [registerErrors]);
 
     const userRegister = async (e) => {
         e.preventDefault();
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }
-        dispatch({ type: 'SET_LOADER' })
-        try{
-            const response = await axios.post("/register", state, config);
-            dispatch({ type: 'CLOSE_LOADER' })
-        }catch(error){
-            dispatch({ type: 'CLOSE_LOADER' });
-            dispatch({
-                type: "REGISTER_ERRORS",
-                payload: error.response.data.error,
-            })
-            console.log(error.response);
-        }
+        dispatch(postRegister(state));
     }
 
     return <>
     <div className="mt-80">
-        <Toaster />
+        <Toaster position="top-right" reverseOrder={false} />
         <div className="account">
             <div className="account__section">
                 <form onSubmit={userRegister}>
@@ -71,7 +60,7 @@ const Register = ()=>{
                         <input type="password" name="password" value={state.password} onChange={ inputEvent }   className="group__control" placeholder="Create Your Password" />
                     </div>
                     <div className="group">
-                        <input type="submit" className="btn btn-default btn-block" value="Register" />
+                        <input type="submit" className="btn btn-default btn-block" value={loading ? '....' : 'Register'} />
                     </div>
                 </form>
             </div>
