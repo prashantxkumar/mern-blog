@@ -7,6 +7,9 @@ import Navbar from "./components/Navbar";
 import Store from "./store/index";
 import Dashboard from "./components/Dashboard";
 import "./main.scss";
+import PrivateRoute from "./private/PrivateRoute";
+import RouteLinks from "./private/RouteLinks";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -15,10 +18,10 @@ function App() {
         <Navbar/>
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/dashboard" component={Dashboard} />
-
+          <RouteLinks exact path="/register" component={Register} />
+          <RouteLinks exact path="/login" component={Login} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <Route component={NotFound}/>
         </Switch>
       </Router>
     </Provider>

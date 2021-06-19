@@ -31,12 +31,8 @@ const Register = (props)=>{
                 toast.error(error.msg);
             })
         }
-        
-        if(user){
-            props.history.push('/dashboard');
-        }
 
-    }, [registerErrors]);
+    }, [registerErrors, user]);
 
     const userRegister = async (e) => {
         e.preventDefault();
