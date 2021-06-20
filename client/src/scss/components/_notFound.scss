@@ -1,23 +1,16 @@
-.notFound{
-    width: 100vw;
+.notFound {
+    width: 100%;
     height: 100vh;
     @extend %flex-center;
-
-    &__container{
-
-        display:flex;
-        justify-content:center;
-        align-items: center;
-        flex-direction: column;
-
-        &__h1{
+    &__container {
+        &__h1 {
             font-size: 6rem;
-            color: rgb(0, 162, 255);
+            color: $green;
+            text-decoration: line-through;
         }
-        &__p{
-            margin-top: 1rem;
-            font-size:1.6rem;
+        &__p {
+            margin-top: -1rem;
+            font-size: 1.6rem;
         }
     }
-
 }

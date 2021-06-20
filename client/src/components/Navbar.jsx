@@ -14,7 +14,7 @@ const Navbar = ()=>{
 
     const Links = user ?(<div className="navbar__right">
     <li>
-        <Link exact to="/create">Create Post</Link>
+        <Link to="/create">Create Post</Link>
     </li>
     <li>
         <Link to='/dashboard'>{user.name}</Link>

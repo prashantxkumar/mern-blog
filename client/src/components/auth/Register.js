@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import toast, {Toaster} from "react-hot-toast";
 import { postRegister } from "../../store/asyncMethods/AuthMethods"
 const Register = (props)=>{
 
-    const [state, setData]=useState({
+    const [state, setState]=useState({
         name:"",
         email:"",
         password:"",
@@ -12,9 +13,9 @@ const Register = (props)=>{
     
     
 
-    const inputEvent = (event)=>{
+    const handleInputs = (event)=>{
           const {name, value} = event.target;
-          setData((preVal)=>{
+          setState((preVal)=>{
             return{
               ...preVal,
               [name]:value,
@@ -40,29 +41,76 @@ const Register = (props)=>{
         dispatch(postRegister(state));
     }
 
-    return <>
-    <div className="mt-80">
-        <Toaster position="top-right" reverseOrder={false} />
-        <div className="account">
-            <div className="account__section">
-                <form onSubmit={userRegister}>
-                    <div className="group">
-                        <input type="text" name="name" value={state.name} onChange={ inputEvent }  className="group__control" placeholder="Enter Your Name" />
-                    </div>
-                    <div className="group">
-                        <input type="email" name="email" value={state.email} onChange={ inputEvent }   className="group__control" placeholder="Enter Your Email" />
-                    </div>
-                    <div className="group">
-                        <input type="password" name="password" value={state.password} onChange={ inputEvent }   className="group__control" placeholder="Create Your Password" />
-                    </div>
-                    <div className="group">
-                        <input type="submit" className="btn btn-default btn-block" value={loading ? '....' : 'Register'} />
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    </>
+    return (
+		<>
+			<Helmet>
+				<title>User Register</title>
+				<meta name='description' content='User register form' />
+			</Helmet>
+			<div className='row mt-80'>
+				<div className='col-8'>
+					{/* <BgImage /> */}
+					<Toaster
+						position='top-right'
+						reverseOrder={false}
+						toastOptions={{
+							style: {
+								fontSize: '14px',
+							},
+						}}
+					/>
+				</div>
+				<div className='col-4'>
+					<div className='account'>
+						<div className='account__section'>
+							<form onSubmit={userRegister}>
+								<div className='group'>
+									<h3 className='form-heading'>Register</h3>
+								</div>
+								<div className='group'>
+									<input
+										type='text'
+										name='name'
+										className='group__control'
+										placeholder='Enter Name'
+										value={state.name}
+										onChange={handleInputs}
+									/>
+								</div>
+								<div className='group'>
+									<input
+										type='email'
+										name='email'
+										className='group__control'
+										placeholder='Enter Email'
+										value={state.email}
+										onChange={handleInputs}
+									/>
+								</div>
+								<div className='group'>
+									<input
+										type='password'
+										name='password'
+										className='group__control'
+										placeholder='Create Password'
+										value={state.password}
+										onChange={handleInputs}
+									/>
+								</div>
+								<div className='group'>
+									<input
+										type='submit'
+										className='btn btn-default btn-block'
+										value={loading ? '...' : 'Register'}
+									/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</>
+	);
 }
 
 export default Register;

@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet";
+// import BgImage from './BgImage';
 import {useState, useEffect} from "react";
 import { postLogin } from "../../store/asyncMethods/AuthMethods"
 import { useSelector, useDispatch } from "react-redux";
@@ -12,7 +13,7 @@ const Login = ()=>{
         email:'',
         password:''
     })
-    const inputEvent = (event)=>{
+    const handleInputs = (event)=>{
         const {name, value} = event.target;
         setState((preVal)=>{
           return{
@@ -35,32 +36,66 @@ const Login = ()=>{
         } 
     },[loginErrors])
 
-    return <>
-    <div className="mt-80">
-        <Toaster position="top-right" reverseOrder={false} />
-            <Helmet>
-				<title>Log In </title>
-				<meta name='description' content='Log In Page' />
+	return (
+		<>
+			<Helmet>
+				<title>User Login</title>
+				<meta name='description' content='User login form' />
 			</Helmet>
-        <div className="account">
-            <div className="account__section">
-                <form onSubmit={userLogin}>
-
-                    <div className="group">
-                        <input type="email" name="email" value={state.email} onChange={ inputEvent }className="group__control" placeholder="Enter Your Email" />
-                    </div>
-                    <div className="group">
-                        <input type="password" name="password" value={state.password} onChange={ inputEvent }className="group__control" placeholder="Enter Your Password" />
-                    </div>
-                    
-                    <div className="group">
-                        <input type="submit" className="btn btn-default btn-block" value={loading ? '...': 'Login'} />
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    </>
+			<div className='row mt-80'>
+				<div className='col-8'>
+					{/* <BgImage /> */}
+					<Toaster
+						position='top-right'
+						reverseOrder={false}
+						toastOptions={{
+							style: {
+								fontSize: '14px',
+							},
+						}}
+					/>
+				</div>
+				<div className='col-4'>
+					<div className='account'>
+						<div className='account__section'>
+							<form onSubmit={userLogin}>
+								<div className='group'>
+									<h3 className='form-heading'>Login</h3>
+								</div>
+								<div className='group'>
+									<input
+										type='email'
+										name='email'
+										value={state.email}
+										onChange={handleInputs}
+										className='group__control'
+										placeholder='Enter Email'
+									/>
+								</div>
+								<div className='group'>
+									<input
+										type='password'
+										name='password'
+										value={state.password}
+										onChange={handleInputs}
+										className='group__control'
+										placeholder='Create Password'
+									/>
+								</div>
+								<div className='group'>
+									<input
+										type='submit'
+										className='btn btn-default btn-block'
+										value={loading ? '...' : 'Login'}
+									/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</>
+	);
 }
 
 export default Login;

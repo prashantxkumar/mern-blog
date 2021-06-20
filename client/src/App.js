@@ -10,6 +10,7 @@ import "./main.scss";
 import PrivateRoute from "./private/PrivateRoute";
 import RouteLinks from "./private/RouteLinks";
 import NotFound from "./components/NotFound";
+import Create from "./components/Create";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <RouteLinks exact path="/register" component={Register} />
           <RouteLinks exact path="/login" component={Login} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/create" component={Create} />
           <Route component={NotFound}/>
         </Switch>
       </Router>

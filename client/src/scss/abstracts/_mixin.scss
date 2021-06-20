@@ -1,8 +1,8 @@
-@mixin  responsive($breakpoint) {
+@mixin responsive($breakpoint){
     @if $breakpoint == 'mobile' {
-        @media (max-width: 600px){
-            @content;
-        }
+       @media (max-width: 600px){
+           @content;
+       }
     }
     @if $breakpoint == 'tablet' {
         @media (max-width: 900px){
@@ -10,7 +10,7 @@
         }
     }
     @if $breakpoint == 'laptop' {
-        @media (max-width: 1200px){
+        @media (max-width: 1200px) {
             @content;
         }
     }
