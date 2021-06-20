@@ -77,7 +77,7 @@ module.exports.login = async (req, res)=>{
         if(user){
 
             const matched = await bcrypt.compare(password, user.password);
-            if(match){
+            if(matched){
 
                 const token = createToken(user);
 
@@ -88,7 +88,7 @@ module.exports.login = async (req, res)=>{
             }
 
         }else{
-            return res.status(404).json({erros: [{msg: "Email not found"}]});
+            return res.status(404).json({errors: [{msg: "Email not found"}]});
         }
 
     }catch (error){

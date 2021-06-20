@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import { SET_LOADER, LOGOUT, CLOSE_LOADER, SET_TOKEN, REGISTER_ERRORS } from "../types/UserTypes";
+import { SET_LOADER, LOGIN_ERRORS, LOGOUT, CLOSE_LOADER, SET_TOKEN, REGISTER_ERRORS } from "../types/UserTypes";
 const initState = {
     loading: false,
     registerErrors: [],
@@ -41,9 +41,12 @@ const AuthReducer = (state = initState, action) => {
     }else if(action.type === SET_TOKEN){
         const decoded=verifyToken(action.payload);
         const {user}=decoded;
-        return {...state, user: user, token: action.payload};
+        return {...state, user: user, token: action.payload, loginErrors: [], registerErrors: []
+        };
     }else if(action.type === LOGOUT){
         return {...state, token:'', user:''};
+    }else if(action.type ===LOGIN_ERRORS){
+        return {...state,loginErrors: action.payload};
     }
     else{
         return state;
