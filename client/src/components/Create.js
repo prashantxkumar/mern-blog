@@ -1,9 +1,15 @@
 import { Helmet } from 'react-helmet';
 import {useState} from "react";
 import ReactQuill from 'react-quill';
+import { createAction } from '../store/asyncMethods/PostMethods';
 import 'react-quill/dist/quill.snow.css';
+import {useSelector, useDispatch} from "react-redux";
 
 const Create = ()=>{
+
+    const dispatch = useDispatch();
+    const {user:{_id, name }} = useSelector((state)=>state.AuthReducer);
+
     const[value, setValue] = useState("");
     const [currentImage, setCurrentImage]=useState("choose image");
     const [imagePreview, setImagePreview] = useState('');
@@ -43,7 +49,16 @@ const Create = ()=>{
 
     const createPost = e => {
         e.preventDefault();
-        console.log(state);
+        const {title, description, image}=state;
+        const formData = new FormData();
+        formData.append('title', title)
+        formData.append('body', value)
+        formData.append('image', image)
+        formData.append('description', description)
+        formData.append('slug', slug)
+        formData.append('name', name)
+        formData.append('id', _id)
+        dispatch(createAction(formData));
     }
     
     const fileHandle=(e)=>{
@@ -87,7 +102,9 @@ const Create = ()=>{
                             <ReactQuill id="body" placeholder="Write something..." theme="snow" value={value} onChange={setValue} />
                         </div>
                         <div className="group">
-                            <input type="submit" value="Create Post" className="btn btn-default btn-block" />
+                            <label htmlFor="decription">Description</label>
+                            <textarea name="description" onChange={handleDescription} defaultValue={state.description} id="description" maxLength="300" placeholder="Description...." cols="30" rows="10" className="group__control"></textarea>
+                            <p className="length">{state.description ? `${state.description.length}/300` : "0/300"}</p>
                         </div>
                 </div>
             </div>
@@ -105,10 +122,9 @@ const Create = ()=>{
                             {imagePreview ? <img src={imagePreview}/> : " "}
                         </div>
                     </div>
+                    
                     <div className="group">
-                        <label htmlFor="decription">Description</label>
-                        <textarea name="description" onChange={handleDescription} defaultValue={state.description} id="description" maxLength="300" placeholder="Description...." cols="30" rows="10" className="group__control"></textarea>
-                        <p className="length">{state.description ? `${state.description.length}/300` : "0/300"}</p>
+                        <input type="submit" value="Create Post" className="btn btn-default btn-block" />
                     </div>
                 </div>
             </div>
