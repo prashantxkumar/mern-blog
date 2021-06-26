@@ -1,12 +1,14 @@
 import { Helmet } from 'react-helmet';
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import ReactQuill from 'react-quill';
 import { createAction } from '../store/asyncMethods/PostMethods';
 import 'react-quill/dist/quill.snow.css';
 import {useSelector, useDispatch} from "react-redux";
+import toast, {Toaster} from "react-hot-toast";
 
-const Create = ()=>{
+const Create = (props)=>{
 
+    const {createError, redirect} = useSelector((state)=>state.PostReducer);
     const dispatch = useDispatch();
     const {user:{_id, name }} = useSelector((state)=>state.AuthReducer);
 
@@ -62,25 +64,50 @@ const Create = ()=>{
     }
     
     const fileHandle=(e)=>{
-        setCurrentImage(e.target.files[0].name);
 
-        setState({
-            ...state,
-            [e.target.name]: e.target.files[0],
-        })
+        if(e.target.files.length !== 0){
+            setCurrentImage(e.target.files[0].name);
 
-        const reader = new FileReader();
-        reader.onloadend = ()=>{
-            setImagePreview(reader.result);
+            setState({
+                ...state,
+                [e.target.name]: e.target.files[0],
+            })
+
+            const reader = new FileReader();
+            reader.onloadend = ()=>{
+                setImagePreview(reader.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
         }
-        reader.readAsDataURL(e.target.files[0]);
     }
     
+    useEffect(()=>{
+
+        if(redirect){
+            props.history.push('/dashboard');
+        }
+
+        if(createError.length > 0){
+            createError.map(err => {
+                toast.error(err.msg);
+            })
+        }
+    },[createError, redirect]);
+
     return <div className="create mt-100">
     <Helmet>
         <title>Create new Post</title>
         <meta name="description" content="Create new Post" />
     </Helmet>
+    <Toaster
+		position='top-right'
+		reverseOrder={false}
+			toastOptions={{
+				style: {
+					fontSize: '14px',
+				},
+			}}
+		/>
     <div className="container">
     <form onSubmit={createPost}>
         <div className="row ml-minus-15 mr-minus-15">

@@ -16,6 +16,7 @@ const verifyToken = token => {
 
     if(new Date() > expiresIn){
         localStorage.removeItem("myToken");
+        return null;
     }else{
         return decodeToken;
     }
@@ -24,10 +25,12 @@ const verifyToken = token => {
 if(token){
 
     const decoded=verifyToken(token);
-    initState.token=token;
-    const {user} = decoded;
-    initState.user = user;  
 
+    if(decoded){
+        initState.token=token;
+        const {user} = decoded;
+        initState.user = user; 
+    }
 }
 
 
