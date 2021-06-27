@@ -84,7 +84,7 @@ module.exports.login = async (req, res)=>{
                 return res.status(200).json({msg: "You have login successfully", token});
 
             }else{
-                return res.status(401).json({erros: [{msg: "Entered password is incorrect"}]});
+                return res.status(401).json({errors: [{msg: "Entered password is incorrect"}]});
             }
 
         }else{

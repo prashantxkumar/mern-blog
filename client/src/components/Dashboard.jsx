@@ -4,16 +4,20 @@ import {useSelector, useDispatch} from "react-redux";
 import { REDIRECT_FALSE, REMOVE_MESSAGE } from "../store/types/PostTypes";
 import toast, {Toaster} from "react-hot-toast";
 import { fetchPosts } from "../store/asyncMethods/PostMethods";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {BsPencil, BsArchive} from "react-icons/bs";
 import Loader from "./Loader";
 import Sidebar from "./Sidebar";
+import Pagination from "./Pagination";
 const Dashboard = () => {
     const {redirect, message, loading} = useSelector((state)=>state.PostReducer);
     
     const { user: {_id} } = useSelector((state)=>state.AuthReducer);
-    const {posts}=useSelector((state)=>state.FetchPosts);
-    console.log(posts);
+    const {posts, count, perPage}=useSelector((state)=>state.FetchPosts);
+    let {page} = useParams();
+    if(page === undefined){
+        page=1;
+    }
     const dispatch = useDispatch();
     useEffect(()=>{
         if(redirect){
@@ -23,8 +27,8 @@ const Dashboard = () => {
             toast.success(message);
             dispatch({type: REMOVE_MESSAGE});
         }
-        dispatch(fetchPosts(_id));
-    },[])
+        dispatch(fetchPosts(_id, page));
+    },[page])
     return <>
         <Helmet>
             <title>User DashBoard</title>
@@ -58,6 +62,7 @@ const Dashboard = () => {
                     )) 
                     : "You dont have any post" 
                     : <Loader/>}
+                    <Pagination page={page} perPage={perPage} count={count}/>
                 </div>
             </div>
         </div>
