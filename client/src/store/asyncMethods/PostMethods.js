@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS} from "../types/PostTypes";
+import {CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST} from "../types/PostTypes";
 
 export const createAction = (postData)=>{
     return async (dispatch, getState)=>{
@@ -45,3 +45,27 @@ export const fetchPosts = (id, page)=>{
         }
     }
 }
+export const fetchPost = (id) => {
+	return async (dispatch, getState) => {
+		const {
+			AuthReducer: { token },
+		} = getState();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		dispatch({ type: SET_LOADER });
+		try {
+			const {
+				data: { post },
+			} = await axios.get(`/post/${id}`, config);
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: SET_POST, payload: post });
+			dispatch({ type: POST_REQUEST });
+		} catch (error) {
+			dispatch({ type: CLOSE_LOADER });
+			console.log(error.message);
+		}
+	};
+};
