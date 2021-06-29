@@ -3,6 +3,8 @@ const formidable = require('formidable');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const Post = require('../models/Post');
+const {body, validationResult} = require('express-validator');
+const {htmlToText} = require('html-to-text');
 
 module.exports.createPost = (req, res)=>{
     const form = formidable({multiples: true});
@@ -98,7 +100,7 @@ module.exports.fetchPosts = async (req, res)=>{
 
 module.exports.fetchPost = async (req, res) => {
 	const id = req.params.id;
-    
+
 	try {
 		const post = await Post.findOne({ _id: id });
 		return res.status(200).json({ post });
@@ -107,3 +109,35 @@ module.exports.fetchPost = async (req, res) => {
 		return res.status(500).json({ errors: error, msg: error.message });
 	}
 };
+
+module.exports.updateValidations = [
+    body('title').notEmpty().trim().withMessage('Title is required'),
+    body('body').notEmpty().trim().custom(value=>{
+        let bodyValue = value.replace(/\n/g, '');
+        if(htmlToText(bodyValue).trim().length === 0){
+            return false;
+        }else{
+            return true;
+        }
+    }).withMessage('Body is required'),
+    body('description').notEmpty().trim().withMessage("Description is required")
+]
+
+module.exports.updatePost = async (req, res)=>{
+    const {title, body, description, id} = req.body;
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }else{
+        try{
+            const response = await Post.findByIdAndUpdate(id, {
+                title,
+                body,
+                description,
+            })
+            return res.status(200).json({msg : 'Your post has been updated successfuly'});
+        }catch(error){
+            return res.status(500).json({errors: error, msg: error.message});
+        }
+    }
+}
