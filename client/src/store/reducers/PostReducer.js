@@ -22,7 +22,7 @@ export const PostReducer = (state=initState, action)=>{
         };
     }else if(type === CLOSE_LOADER){
         return{
-            ...state, loading: true
+            ...state, loading: false
         };
     }else if(type === CREATE_ERRORS){
         return{

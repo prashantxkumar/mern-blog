@@ -12,6 +12,7 @@ import RouteLinks from "./private/RouteLinks";
 import NotFound from "./components/NotFound";
 import Create from "./components/Create";
 import Edit from "./components/Edit";
+import EditImage from "./components/EditImage";
 function App() {
   return (
     <Provider store = {Store}>
@@ -24,6 +25,7 @@ function App() {
           <PrivateRoute exact path="/dashboard/:page?" component={Dashboard} />
           <PrivateRoute exact path="/create" component={Create} />
           <PrivateRoute exact path="/edit/:id" component={Edit} />
+          <PrivateRoute exact path="/updateImage/:id" component={EditImage} />
           <Route component={NotFound}/>
         </Switch>
       </Router>

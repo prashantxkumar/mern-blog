@@ -5,7 +5,7 @@ import { REDIRECT_FALSE, REMOVE_MESSAGE } from "../store/types/PostTypes";
 import toast, {Toaster} from "react-hot-toast";
 import { fetchPosts } from "../store/asyncMethods/PostMethods";
 import {Link, useParams} from "react-router-dom";
-import {BsPencil, BsArchive} from "react-icons/bs";
+import {BsPencil, BsArchive, BsImage} from "react-icons/bs";
 import Loader from "./Loader";
 import Sidebar from "./Sidebar";
 import Pagination from "./Pagination";
@@ -49,12 +49,13 @@ const Dashboard = () => {
                     <Sidebar/>
                 </div>
                 <div className="col-9 p-15">
-                    { loading ? posts.length > 0 ? posts.map(post=>(
+                    { !loading ? posts.length > 0 ? posts.map(post=>(
                         <div className="dashboard__post" key={post._id}>
                             <div className="dashboard__post__title">
                                 <Link to='/'>{post.title}</Link>
                             </div>
                             <div className="dashboard__post__links">
+                                <Link to={`updateImage/${post._id}`}><BsImage className='icon'/></Link>
                                 <Link className="icon" to={`/edit/${post._id}`}><BsPencil/></Link>
                                 <Link className="icon" to="/"><BsArchive/></Link>
                             </div>
