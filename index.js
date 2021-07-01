@@ -13,7 +13,7 @@ connect();
 
 app.use(bodyParser.json());
 
-app.use("/", router);
+app.use('/', router);
 app.use('/', postRoutes);
 app.listen(PORT , ()=>{
     console.log("Server is running on PORT");

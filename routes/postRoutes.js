@@ -8,4 +8,5 @@ router.get('/posts/:id/:page', auth, fetchPosts);
 router.get('/post/:id', auth, fetchPost);
 router.post('/updateImage', auth, updateImage);
 router.get('/deletepost/:id', auth, deletePost);
+
 module.exports = router; 

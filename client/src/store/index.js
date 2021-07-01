@@ -6,6 +6,7 @@ import AuthReducer from "./reducers/AuthReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { PostReducer, FetchPosts, FetchPost, UpdatePost, UpdateImage } from "./reducers/PostReducer";
 
+
 const rootReducers = combineReducers({
     AuthReducer,
     PostReducer,
