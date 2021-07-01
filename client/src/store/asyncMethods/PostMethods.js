@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST, SET_UPDATE_ERRORS} from "../types/PostTypes";
+import {CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST, SET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR,} from "../types/PostTypes";
 
 export const createAction = (postData)=>{
     return async (dispatch, getState)=>{
@@ -100,5 +100,27 @@ export const updateAction = (editData)=>{
             dispatch({type:SET_UPDATE_ERRORS, payload: errors})
             console.log(error.response);
         }
+    }
+}
+
+export const updateImageAction = (updateData)=>{
+    return async (dispatch, getState)=>{
+
+        const { AuthReducer: { token }} = getState();
+        const config = {headers: {Authorization: `Bearer ${token}`,},};
+
+        dispatch({type: SET_LOADER });
+
+        try {
+            const {data : {msg}} = await axios.post("/updateImage", updateData, config)
+            dispatch({type: CLOSE_LOADER});
+            dispatch({type:REDIRECT_TRUE});
+            dispatch({type:SET_MESSAGE, payload: msg});
+        } catch (error) {
+            const {response:{ data : {errors}}}=error;
+            dispatch({ type: CLOSE_LOADER });
+            dispatch({type: UPDATE_IMAGE_ERROR, payload: errors});
+        }
+
     }
 }

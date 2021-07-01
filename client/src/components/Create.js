@@ -145,7 +145,7 @@ const Create = (props)=>{
                         {slugButton? <button className="btn btn-default" onClick={handleURL}>Update Slug</button>: " "}
                     </div>
                     <div className="group">
-                        <div className="imagePreivew">
+                        <div className="imagePreview">
                             {imagePreview ? <img src={imagePreview}/> : " "}
                         </div>
                     </div>
