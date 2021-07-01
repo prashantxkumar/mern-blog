@@ -5,7 +5,7 @@ import thunkMiddleware from "redux-thunk";
 import AuthReducer from "./reducers/AuthReducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { PostReducer, FetchPosts, FetchPost, UpdatePost, UpdateImage } from "./reducers/PostReducer";
-
+import { updateName } from "./reducers/ProfileReducer";
 
 const rootReducers = combineReducers({
     AuthReducer,
@@ -14,6 +14,7 @@ const rootReducers = combineReducers({
     FetchPost,
     UpdatePost,
     UpdateImage,
+    updateName
 });
 
 const middlewares = [thunkMiddleware];
