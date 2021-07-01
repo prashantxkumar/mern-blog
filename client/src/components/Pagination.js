@@ -37,6 +37,6 @@ const Pagination = ({count ,page, perPage}) => {
             return (<li><Link to={`/dashboard/${parseInt(page)}`}><BsChevronDoubleLeft/></Link></li>)
         }
     }
-    return totalPages ? <div className="pagination">{previous()}{links()}{next()}</div> : '';
+    return totalPages && count > 3 ? <div className="pagination">{previous()}{links()}{next()}</div> : '';
 }
 export default Pagination;
