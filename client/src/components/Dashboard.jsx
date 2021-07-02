@@ -7,6 +7,7 @@ import { fetchPosts } from "../store/asyncMethods/PostMethods";
 import {Link, useParams, useHistory} from "react-router-dom";
 import {BsPencil, BsArchive, BsImage} from "react-icons/bs";
 import axios from "axios";
+import moment from 'moment';
 import Loader from "./Loader";
 import Sidebar from "./Sidebar";
 import Pagination from "./Pagination";
@@ -78,6 +79,7 @@ const Dashboard = () => {
                         <div className="dashboard__post" key={post._id}>
                             <div className="dashboard__post__title">
                                 <Link to='/'>{post.title}</Link>
+                                <span>Posted : {moment(post.updatedAt).fromNow()}</span>
                             </div>
                             <div className="dashboard__post__links">
                                 <Link to={`updateImage/${post._id}`}><BsImage className='icon'/></Link>
