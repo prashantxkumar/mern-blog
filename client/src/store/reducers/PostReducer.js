@@ -1,4 +1,4 @@
-import { SET_LOADER, CLOSE_LOADER, CREATE_ERRORS, REMOVE_ERRORS, REDIRECT_TRUE, REDIRECT_FALSE, SET_MESSAGE, REMOVE_MESSAGE, SET_POSTS, SET_POST, POST_REQUEST, POST_RESET, SET_UPDATE_ERRORS, RESET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, RESET_UPDATE_IMAGE_ERROR } from "../types/PostTypes";
+import { SET_LOADER, CLOSE_LOADER, CREATE_ERRORS, REMOVE_ERRORS, REDIRECT_TRUE, REDIRECT_FALSE, SET_MESSAGE, REMOVE_MESSAGE, SET_POSTS, SET_POST, POST_REQUEST, POST_RESET, SET_UPDATE_ERRORS, RESET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, RESET_UPDATE_IMAGE_ERROR, SET_DETAILS } from "../types/PostTypes";
 
 const initState = {
     loading: false,
@@ -12,6 +12,7 @@ const initState = {
     postStatus: false,
     editErrors: [],
     updateImageErrors:[],
+    details:{},
 }
 
 export const PostReducer = (state=initState, action)=>{
@@ -39,6 +40,8 @@ export const PostReducer = (state=initState, action)=>{
         return {...state, redirect: false };
     }else if(type ===  REMOVE_MESSAGE){
         return {...state, message:''};
+    }else if(type===SET_DETAILS){
+        return{...state, details: payload};
     }
     else{
         return state;

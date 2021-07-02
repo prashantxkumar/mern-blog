@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST, SET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR,} from "../types/PostTypes";
+import {CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST, SET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, SET_DETAILS} from "../types/PostTypes";
 
 export const createAction = (postData)=>{
     return async (dispatch, getState)=>{
@@ -125,7 +125,9 @@ export const updateImageAction = (updateData)=>{
     }
 }
 
-export const HomePosts = (page)=>{
+
+
+export const homePosts = (page)=>{
 
     return async (dispatch)=>{
 
@@ -135,12 +137,27 @@ export const HomePosts = (page)=>{
             
             const {data:{response, count, perPage}} = await axios.get(`/home/${page}`);
 
+
             dispatch({type: CLOSE_LOADER})
-            dispatch({type: SET_POST, payload:{response, count, perPage}})
+            dispatch({type: SET_POSTS, payload:{response, count, perPage}})
 
         } catch (error) {
             console.log(error);
             dispatch({ type: CLOSE_LOADER })
+        }
+    }
+}
+
+export const postDetails = (id)=>{
+    return async (dispatch)=>{
+        dispatch({type: SET_LOADER});
+        try {
+            const {data:{post}} = await axios.get(`/details/${id}`)
+            dispatch({type: SET_DETAILS, payload: post});
+            dispatch({type: CLOSE_LOADER});
+        } catch (error) {
+            dispatch({ type: CLOSE_LOADER });
+            console.log(error);
         }
     }
 }

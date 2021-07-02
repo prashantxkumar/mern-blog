@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import { BsChevronDoubleRight, BsChevronDoubleLeft } from "react-icons/bs";
-const Pagination = ({count ,page, perPage}) => {
+const Pagination = ({path, count ,page, perPage}) => {
 
     let totalPages=Math.ceil(count / perPage);
     let startLoop=page;
@@ -17,7 +17,7 @@ const Pagination = ({count ,page, perPage}) => {
         for(let i = startLoop; i <= endLoop; i++){
             store.push(
                 <li key={i} className={i == page ? 'active' : ''}>
-                    <Link to={`/dashboard/${i}`}>{i}</Link>
+                    <Link to={`/${path}/${i}`}>{i}</Link>
                 </li>
             );
         }
@@ -25,16 +25,16 @@ const Pagination = ({count ,page, perPage}) => {
     }
     const next = () => {
         if(page < totalPages){
-            return (<li><Link to={`/dashboard/${parseInt(page)+1}`}><BsChevronDoubleRight/></Link></li>)
+            return (<li><Link to={`/${path}/${parseInt(page)+1}`}><BsChevronDoubleRight/></Link></li>)
         }else{
-            return (<li><Link to={`/dashboard/${parseInt(page)}`}><BsChevronDoubleRight/></Link></li>)
+            return (<li><Link to={`/${path}/${parseInt(page)}`}><BsChevronDoubleRight/></Link></li>)
         }
     }
     const previous = () => {
         if(page > 1){
-            return (<li><Link to={`/dashboard/${parseInt(page)-1}`}><BsChevronDoubleLeft/></Link></li>)
+            return (<li><Link to={`/${path}/${parseInt(page)-1}`}><BsChevronDoubleLeft/></Link></li>)
         }else if(page==1){
-            return (<li><Link to={`/dashboard/${parseInt(page)}`}><BsChevronDoubleLeft/></Link></li>)
+            return (<li><Link to={`/${path}/${parseInt(page)}`}><BsChevronDoubleLeft/></Link></li>)
         }
     }
     return totalPages && count > 3 ? <div className="pagination">{previous()}{links()}{next()}</div> : '';

@@ -4,7 +4,6 @@ const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const Post = require('../models/Post');
 const {body, validationResult} = require('express-validator');
-const {htmlToText} = require('html-to-text');
 
 module.exports.createPost = (req, res)=>{
     const form = formidable({multiples: true});
@@ -198,9 +197,19 @@ module.exports.home = async (req, res)=>{
     try {
         const count = await Post.find({}).countDocuments();
         const posts = await Post.find({}).skip(skip).limit(perPage).sort({updatedAt: -1});
-        return res.status(200).json({respnse: posts, count, perPage});
+        return res.status(200).json({response: posts, count, perPage});
     } catch (error) {
         return res.status(500).json({errors: error, msg: error.message});
     }
 
-}
+};
+
+module.exports.postDetails = async (req, res) => {
+	const id = req.params.id;
+	try {
+		const post = await Post.findOne({ _id : id });
+		return res.status(200).json({ post });
+	} catch (error) {
+		return res.status(500).json({ errors: error, msg: error.message });
+	}
+};
