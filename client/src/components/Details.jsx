@@ -1,5 +1,6 @@
 import {useSelector, useDispatch} from "react-redux";
-import {useEffect} from 'react';
+import { Helmet } from "react-helmet";
+import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {postDetails} from '../store/asyncMethods/PostMethods';
 import Loader from "./Loader";
@@ -8,13 +9,26 @@ var h2p = require('html2plaintext');
 
 const Details = ()=>{
     const {id} = useParams();
+    const[comment, setComment]=useState('');
     const {loading, details}= useSelector((state)=>state.PostReducer);
     const dispatch = useDispatch();
+    const {user} = useSelector((state)=>state.AuthReducer);
+    
+    const addComment = (e)=>{
+        e.preventDefault();
+        
+    }
+
     useEffect(() => {
         dispatch(postDetails(id));
-    },[id])
+    },[id]);
+    
     return(
         <div className="container">
+            <Helmet>
+                <title>{details.title}</title>
+                <meta name="description" content={details.title} />
+            </Helmet>
             <div className="row mt-100">
                 <div className="col-8">
                     {!loading? 
@@ -35,7 +49,22 @@ const Details = ()=>{
                             <div className="post__body__details">
                                 {h2p(details.body)}
                             </div>
+                            <div className="post__body__image">
+                                <img src={`/images/${details.image}`} alt="img"/>
+                            </div>
                         </div>
+                        {user ? 
+                            <div className="post__comment">
+                                <form onSubmit={addComment}>
+                                    <div className="group">
+                                        <input type="text" className="group__control" placeholder="Write comment"onChange={(e)=>setComment(e.target.value)} value={comment}/>
+                                    </div>
+                                    <div className="group">
+                                        <input type="submit" value="Post Comment" className="btn btn-default"/>
+                                    </div>
+                                </form>
+                            </div>
+                        :" "}
                     </div>
                     :<Loader/>}
                 </div>

@@ -48,7 +48,7 @@ const Home = ()=>{
                                     </div>
                                     <div className="post__body">
                                         <h1 className="post__body__title"> 
-                                            <Link to={`/details/${post._id}`}>{post.title}</Link>
+                                            <Link to={`/details/${post.slug}`}>{post.title}</Link>
                                         </h1>
                                         <div className="post__body__details">
                                             {h2p(post.body.slice(0, 300))}
