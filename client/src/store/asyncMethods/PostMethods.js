@@ -124,3 +124,23 @@ export const updateImageAction = (updateData)=>{
 
     }
 }
+
+export const HomePosts = (page)=>{
+
+    return async (dispatch)=>{
+
+        dispatch({type:SET_LOADER})
+
+        try {
+            
+            const {data:{response, count, perPage}} = await axios.get(`/home/${page}`);
+
+            dispatch({type: CLOSE_LOADER})
+            dispatch({type: SET_POST, payload:{response, count, perPage}})
+
+        } catch (error) {
+            console.log(error);
+            dispatch({ type: CLOSE_LOADER })
+        }
+    }
+}
