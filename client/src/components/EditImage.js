@@ -7,15 +7,17 @@ import { updateImageAction } from "../store/asyncMethods/PostMethods";
 import {RESET_UPDATE_IMAGE_ERROR} from "../store/types/PostTypes";
 import Loader from './Loader';
 
+
 const EditImage = () => {
 
     const {id} = useParams();
     const dispatch = useDispatch();
     const{push}=useHistory();
-    
+
     const {updateImageErrors}= useSelector((state)=>state.UpdateImage);
     const {redirect} = useSelector((state)=>state.PostReducer);
     const [state, setState] = useState({
+        
         image: '',
         imagePreview: '',
         imageName:'Choose Image',
