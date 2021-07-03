@@ -6,8 +6,9 @@ import {homePosts} from "../store/asyncMethods/PostMethods";
 import {useParams, Link} from 'react-router-dom';
 import moment from 'moment';
 import Pagination from './Pagination';
-import { htmlToText } from 'html-to-text';
+// import { htmlToText } from 'html-to-text';
 // // import { parse } from 'node-html-parser';
+import ReactHtmlParser from 'react-html-parser'; 
 var h2p = require('html2plaintext');
 
 const Home = ()=>{
@@ -51,7 +52,7 @@ const Home = ()=>{
                                             <Link to={`/details/${post.slug}`}>{post.title}</Link>
                                         </h1>
                                         <div className="post__body__details">
-                                            {htmlToText(post.body.slice(0, 300))}
+                                            {ReactHtmlParser(post.body.slice(0, 300))}
                                         </div>
                                     </div>
                                 </div>
