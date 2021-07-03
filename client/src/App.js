@@ -18,6 +18,7 @@ import ChangePassword from "./components/ChangePassword";
 import Details from "./components/Details";
 function App() {
   return (
+    <>
     <Provider store = {Store}>
       <Router>
         <Navbar/>
@@ -37,6 +38,7 @@ function App() {
         </Switch>
       </Router>
     </Provider>
+    </>
   );
 }
 

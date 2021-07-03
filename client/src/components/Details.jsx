@@ -4,25 +4,28 @@ import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {postDetails} from '../store/asyncMethods/PostMethods';
 import Loader from "./Loader";
+import Comments from "./Comments";
 import moment from 'moment';
+import {postComment } from "../store/asyncMethods/PostMethods";
 var h2p = require('html2plaintext');
 
 const Details = ()=>{
-    const {id} = useParams();
-    const[comment, setComment]=useState('');
-    const {loading, details}= useSelector((state)=>state.PostReducer);
-    const dispatch = useDispatch();
-    const {user} = useSelector((state)=>state.AuthReducer);
-    
-    const addComment = (e)=>{
-        e.preventDefault();
-        
-    }
-
-    useEffect(() => {
-        dispatch(postDetails(id));
-    },[id]);
-    
+	const { id } = useParams();
+	const [comment, setComment] = useState('');
+	const { user } = useSelector((state) => state.AuthReducer);
+	const { loading, details, comments } = useSelector(
+		(state) => state.PostReducer
+	);
+	const dispatch = useDispatch();
+	const addComment = (e) => {
+		e.preventDefault();
+		dispatch(postComment({ id: details._id, comment, userName: user.name }));
+		setComment('');
+		dispatch(postDetails(id));
+	};
+	useEffect(() => {
+		dispatch(postDetails(id));
+	}, [id]);
     return(
         <div className="container">
             <Helmet>
@@ -54,6 +57,7 @@ const Details = ()=>{
                             </div>
                         </div>
                         {user ? 
+                        <>
                             <div className="post__comment">
                                 <form onSubmit={addComment}>
                                     <div className="group">
@@ -64,6 +68,8 @@ const Details = ()=>{
                                     </div>
                                 </form>
                             </div>
+                            <Comments comments={comments}/>
+                        </>
                         :" "}
                     </div>
                     :<Loader/>}

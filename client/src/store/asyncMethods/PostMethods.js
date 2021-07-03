@@ -1,5 +1,5 @@
 import axios from "axios";
-import {CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST, SET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, SET_DETAILS} from "../types/PostTypes";
+import {COMMENTS, CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST, SET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, SET_DETAILS} from "../types/PostTypes";
 
 export const createAction = (postData)=>{
     return async (dispatch, getState)=>{
@@ -152,12 +152,33 @@ export const postDetails = (id)=>{
     return async (dispatch)=>{
         dispatch({type: SET_LOADER});
         try {
-            const {data:{post}} = await axios.get(`/details/${id}`)
-            dispatch({type: SET_DETAILS, payload: post});
+            const {data:{post, comments }} = await axios.get(`/details/${id}`)
             dispatch({type: CLOSE_LOADER});
+            dispatch({type: SET_DETAILS, payload: post});
+            dispatch({ type: COMMENTS, payload: comments});
         } catch (error) {
             dispatch({ type: CLOSE_LOADER });
             console.log(error);
         }
     }
-}
+};
+
+export const postComment = (commentData) => {
+	return async (dispatch, getState) => {
+		const {
+			AuthReducer: { token },
+		} = getState();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		};
+		dispatch({ type: SET_LOADER });
+		try {
+			const { data } = await axios.post('/comment', commentData, config);
+			dispatch({ type: CLOSE_LOADER });
+		} catch (error) {
+			dispatch({ type: CLOSE_LOADER });
+		}
+	};
+};

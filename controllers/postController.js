@@ -3,6 +3,7 @@ const formidable = require('formidable');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const Post = require('../models/Post');
+const CommentSchema = require('../models/Comment');
 const {body, validationResult} = require('express-validator');
 
 module.exports.createPost = (req, res)=>{
@@ -207,8 +208,26 @@ module.exports.home = async (req, res)=>{
 module.exports.postDetails = async (req, res) => {
 	const id = req.params.id;
 	try {
-		const post = await Post.findOne({ slug : id });
-		return res.status(200).json({ post });
+		const post = await Post.findOne({ slug: id });
+		const comments = await CommentSchema.find({ postId: post._id }).sort({
+			updatedAt: -1,
+		});
+		return res.status(200).json({ post, comments });
+        
+	} catch (error) {
+		return res.status(500).json({ errors: error, msg: error.message });
+	}
+};
+
+module.exports.postComment = async (req, res) => {
+	const { id, comment, userName } = req.body;
+	try {
+		const response = await CommentSchema.create({
+			postId: id,
+			comment,
+			userName,
+		});
+		return res.status(200).json({ msg: 'Your comment has been posted' });
 	} catch (error) {
 		return res.status(500).json({ errors: error, msg: error.message });
 	}

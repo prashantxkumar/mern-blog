@@ -11,6 +11,8 @@ import moment from 'moment';
 import Loader from "./Loader";
 import Sidebar from "./Sidebar";
 import Pagination from "./Pagination";
+import ParticleBackground from "./ParticleBackground";
+
 const Dashboard = () => {
     const {redirect, message, loading} = useSelector((state)=>state.PostReducer);
     
@@ -69,6 +71,7 @@ const Dashboard = () => {
 				},
 			}}
 		/>
+        
         <div className="container mt-100">
             <div className="row ml-minus-15 mr-minus-15">
                 <div className="col-3 p-15">

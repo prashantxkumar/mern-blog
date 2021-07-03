@@ -20,7 +20,7 @@ const Navbar = ()=>{
         <Link to='/dashboard'>{user.name}</Link>
     </li>
     <li>
-        <span onClick={logout}>logout</span>
+        <span onClick={logout}>Logout</span>
     </li>
 </div>):(<div className="navbar__right">
     <li>
