@@ -58,61 +58,87 @@ const Edit = () => {
 			push('/dashboard');
 		}
 	}, [redirect]);
-
-    return (!loading ? <div className="mt-100">
-    <Helmet>
-        <title>Edit Post</title>
-        <meta name="description" content="Edit Post" />
-    </Helmet>
-    <Toaster
-        position='top-right'
-        reverseOrder={false}
-        toastOptions={{
-            style: {
-                fontSize: '14px',
-            },
-        }}
-    />
-    <div className="container">
-        <div className="row">
-            <div className="col-6">
-                <div className="card">
-                    <h3 className="card__h3">Edit Post</h3>
-                    <form onSubmit={updatePost}>
-                    <div className='group'>
-                            <label htmlFor='title'>Post title</label>
-                            <input
-                                type='text'
-                                name='title'
-                                id='title'
-                                className='group__control'
-                                placeholder='Post title'
-                                value={state.title}
-                                onChange={(e) =>
-                                    setState({ ...state, title: e.target.value })
-                                }
-                            />
-                        </div>
-                        <div className="group">
-                            <label htmlFor="body">Post body</label>
-                            <ReactQuill id="body" placeholder="Write something..." theme="snow" value={value} onChange={setValue} />
-                        </div>
-                        <div className="group">
-                            <label htmlFor="decription">Description</label>
-                            <textarea name="description" onChange={(e)=>setState({...state, description: e.target.value})} defaultValue={state.description} id="description" maxLength="300" placeholder="Description...." onKeyUp={(e)=>setState({...state, description: e.target.value})} cols="30" rows="10" className="group__control"></textarea>
-                            <p className="length">{state.description ? `${state.description.length}/300` : "0/300"}</p>
-                        </div>
-                        <div className="group">
-                            <input type="submit" value="Edit" className='btn btn-default btn-block'/>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> : <Loader/>
-        
-    );
-}
-
+	return !loading ? (
+		<div className='mt-100'>
+			<Helmet>
+				<title>Edit post</title>
+				<meta name='description' content='update post' />
+			</Helmet>
+			<Toaster
+				position='top-right'
+				reverseOrder={false}
+				toastOptions={{
+					style: {
+						fontSize: '14px',
+					},
+				}}
+			/>
+			<div className='container'>
+				<div className='row'>
+					<div className='col-6'>
+						<div className='card'>
+							<h3 className='card__h3'>Edit post</h3>
+							<form onSubmit={updatePost}>
+								<div className='group'>
+									<label htmlFor='title'>Post title</label>
+									<input
+										type='text'
+										name='title'
+										id='title'
+										className='group__control'
+										placeholder='Post title'
+										value={state.title}
+										onChange={(e) =>
+											setState({ ...state, title: e.target.value })
+										}
+									/>
+								</div>
+								<div className='group'>
+									<label htmlFor='body'>Post body</label>
+									<ReactQuill
+										theme='snow'
+										id='body'
+										placeholder='Post body...'
+										value={value}
+										onChange={setValue}
+									/>
+								</div>
+								<div className='group'>
+									<label htmlFor='description'>Meta Description</label>
+									<textarea
+										name='description'
+										id='description'
+										cols='30'
+										rows='10'
+										defaultValue={state.description}
+										onChange={(e) =>
+											setState({ ...state, description: e.target.value })
+										}
+										onKeyUp={(e) =>
+											setState({ ...state, description: e.target.value })
+										}
+										className='group__control'
+										placeholder='meta description...'
+										maxLength='150'></textarea>
+									<p className='length'>
+										{state.description ? state.description.length : 0}
+									</p>
+								</div>
+								<div className='group'>
+									<input
+										type='submit'
+										value='Edit'
+										className='btn btn-default btn-block'
+									/>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	) : (
+		<Loader />
+	);
+};
 export default Edit;
