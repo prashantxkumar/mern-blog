@@ -5,9 +5,10 @@ import { createAction } from '../store/asyncMethods/PostMethods';
 import 'react-quill/dist/quill.snow.css';
 import {useSelector, useDispatch} from "react-redux";
 import toast, {Toaster} from "react-hot-toast";
+import Loader from "./Loader";
 
 const Create = (props)=>{
-
+    const {loading}= useSelector((state) => state.PostReducer);
     const {createError, redirect} = useSelector((state)=>state.PostReducer);
     const dispatch = useDispatch();
     const {user:{_id, name }} = useSelector((state)=>state.AuthReducer);
@@ -108,7 +109,7 @@ const Create = (props)=>{
 				},
 			}}
 		/>
-    <div className="container">
+        {!loading?<div className="container">
     <form onSubmit={createPost}>
         <div className="row ml-minus-15 mr-minus-15">
             <div className="col-6 p-15">
@@ -157,7 +158,7 @@ const Create = (props)=>{
             </div>
         </div>
         </form>
-    </div>
+    </div>: <Loader/> }
     </div>
 }
 
