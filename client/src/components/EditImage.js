@@ -6,6 +6,7 @@ import toast, {Toaster} from "react-hot-toast";
 import { updateImageAction } from "../store/asyncMethods/PostMethods";
 import {RESET_UPDATE_IMAGE_ERROR} from "../store/types/PostTypes";
 import Loader from './Loader';
+
 const EditImage = () => {
 
     const {id} = useParams();
