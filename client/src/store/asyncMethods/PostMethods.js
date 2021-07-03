@@ -1,5 +1,5 @@
 import axios from "axios";
-import {COMMENTS, CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST, SET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, SET_DETAILS} from "../types/PostTypes";
+import {COMMENTS, CREATE_ERRORS, REMOVE_ERRORS, SET_LOADER, SET_MESSAGE, REMOVE_MESSAGE, CLOSE_LOADER, REDIRECT_TRUE, REDIRECT_FALSE, SET_POSTS, SET_POST, POST_REQUEST, SET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, SET_DETAILS, COMMENT_ERROR} from "../types/PostTypes";
 
 export const createAction = (postData)=>{
     return async (dispatch, getState)=>{
@@ -178,6 +178,7 @@ export const postComment = (commentData) => {
 			const { data } = await axios.post('/comment', commentData, config);
 			dispatch({ type: CLOSE_LOADER });
 		} catch (error) {
+            dispatch({type: COMMENT_ERROR, payload: error.response.data.errors});
 			dispatch({ type: CLOSE_LOADER });
 		}
 	};

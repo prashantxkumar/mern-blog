@@ -221,6 +221,8 @@ module.exports.postDetails = async (req, res) => {
 
 module.exports.postComment = async (req, res) => {
 	const { id, comment, userName } = req.body;
+
+
 	try {
 		const response = await CommentSchema.create({
 			postId: id,

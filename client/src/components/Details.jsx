@@ -7,6 +7,8 @@ import Loader from "./Loader";
 import Comments from "./Comments";
 import moment from 'moment';
 import {postComment } from "../store/asyncMethods/PostMethods";
+import toast, {Toaster} from "react-hot-toast";
+import {RESET_COMMENT_ERROR} from "../store/types/PostTypes";
 var h2p = require('html2plaintext');
 
 const Details = ()=>{
@@ -16,6 +18,8 @@ const Details = ()=>{
 	const { loading, details, comments } = useSelector(
 		(state) => state.PostReducer
 	);
+    const {commentError} = useSelector((state) => state.PostReducer);
+
 	const dispatch = useDispatch();
 	const addComment = (e) => {
 		e.preventDefault();
@@ -23,15 +27,29 @@ const Details = ()=>{
 		setComment('');
 		dispatch(postDetails(id));
 	};
+
+
+
 	useEffect(() => {
 		dispatch(postDetails(id));
 	}, [id]);
+
+
     return(
         <div className="container">
             <Helmet>
                 <title>{details.title}</title>
                 <meta name="description" content={details.title} />
             </Helmet>
+            <Toaster
+            position='top-center'
+            reverseOrder={false}
+                toastOptions={{
+                    style: {
+                        fontSize: '14px',
+                    },
+                }}
+            />
             <div className="row mt-100">
                 <div className="col-8">
                     {!loading? 

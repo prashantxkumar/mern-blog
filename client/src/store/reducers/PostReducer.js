@@ -1,4 +1,4 @@
-import { COMMENTS, SET_LOADER, CLOSE_LOADER, CREATE_ERRORS, REMOVE_ERRORS, REDIRECT_TRUE, REDIRECT_FALSE, SET_MESSAGE, REMOVE_MESSAGE, SET_POSTS, SET_POST, POST_REQUEST, POST_RESET, SET_UPDATE_ERRORS, RESET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, RESET_UPDATE_IMAGE_ERROR, SET_DETAILS } from "../types/PostTypes";
+import { COMMENTS, SET_LOADER, CLOSE_LOADER, CREATE_ERRORS, REMOVE_ERRORS, REDIRECT_TRUE, REDIRECT_FALSE, SET_MESSAGE, REMOVE_MESSAGE, SET_POSTS, SET_POST, POST_REQUEST, POST_RESET, SET_UPDATE_ERRORS, RESET_UPDATE_ERRORS, UPDATE_IMAGE_ERROR, RESET_UPDATE_IMAGE_ERROR, SET_DETAILS, COMMENT_ERROR, RESET_COMMENT_ERROR } from "../types/PostTypes";
 
 const initState = {
     loading: false,
@@ -14,6 +14,7 @@ const initState = {
     updateImageErrors:[],
     details:{},
     comments:[],
+    commentError:[],
 }
 
 export const PostReducer = (state=initState, action)=>{
@@ -45,6 +46,10 @@ export const PostReducer = (state=initState, action)=>{
         return{...state, details: payload};
     }else if(type === COMMENTS){
         return {...state, comments: payload};
+    }else if(type === COMMENT_ERROR){
+        return {...state, commentError: payload};
+    }else if(type === RESET_COMMENT_ERROR){
+        return {...state, commentError:[]}
     }
     else{
         return state;

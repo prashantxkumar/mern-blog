@@ -1,7 +1,6 @@
   
 import moment from 'moment';
 const Comments = ({ comments }) => {
-	console.log('my comments:', comments);
 	return comments.length > 0
 		? comments.map((comment) => (
 				<div key={comment._id} className='commentSection'>
