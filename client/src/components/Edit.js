@@ -38,6 +38,7 @@ const Edit = () => {
 	}, [post]);
 	const updatePost = (e) => {
 		e.preventDefault();
+        console.log(value);
 		dispatch(
 			updateAction({
 				title: state.title,
