@@ -111,36 +111,39 @@ module.exports.fetchPost = async (req, res) => {
 };
 
 module.exports.updateValidations = [
-    body('title').notEmpty().trim().withMessage('Title is required'),
-    body('body').notEmpty().trim().custom(value=>{
-        let bodyValue = value.replace(/\n/g, '');
-        if(htmlToText(bodyValue).trim().length === 0){
-            return false;
-        }else{
-            return true;
-        }
-    }).withMessage('Body is required'),
-    body('description').notEmpty().trim().withMessage("Description is required")
-]
-
-module.exports.updatePost = async (req, res)=>{
-    const {title, body, description, id} = req.body;
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()})
-    }else{
-        try{
-            const response = await Post.findByIdAndUpdate(id, {
-                title,
-                body,
-                description,
-            })
-            return res.status(200).json({msg : 'Your post has been updated successfuly'});
-        }catch(error){
-            return res.status(500).json({errors: error, msg: error.message});
-        }
-    }
-}
+	body('title').notEmpty().trim().withMessage('Title is required'),
+	body('body')
+		.notEmpty()
+		.trim()
+		.custom((value) => {
+			let bodyValue = value.replace(/\n/g, '');
+			if (htmlToText(bodyValue).trim().length === 0) {
+				return false;
+			} else {
+				return true;
+			}
+		})
+		.withMessage('Body is required'),
+	body('description').notEmpty().trim().withMessage('Description is required'),
+];
+module.exports.updatePost = async (req, res) => {
+	const { title, body, description, id } = req.body;
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	} else {
+		try {
+			const response = await Post.findByIdAndUpdate(id, {
+				title,
+				body,
+				description,
+			});
+			return res.status(200).json({ msg: 'Your post has been updated' });
+		} catch (error) {
+			return res.status(500).json({ errors: error, msg: error.message });
+		}
+	}
+};
 
 module.exports.updateImage = (req, res)=>{
     const form = formidable({multiples: true});
