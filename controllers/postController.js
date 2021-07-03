@@ -134,40 +134,42 @@ module.exports.updatePost = async (req, res) => {
 	}
 };
 
-module.exports.updateImage = (req, res)=>{
-    const form = formidable({multiples: true});
-    form.parse(req, (errors, fields, files)=>{
-        const imageErrors = [];
-        const {id}=fields;
-        if(Object.keys(files).length === 0){
-            imageErrors.push({msg : 'Please choose image'});
-        }else{
-            const {type} = files.image;
-            const split = type.split('/');
-            const extension = split[1].toLowerCase();
-            if(extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png'){
-                imageErrors.push({msg : `${extension} is not a valid extension`});
-            }else{
-                files.image.name = uuidv4() + '.'+extension;
-            }
-        }
-        if(imageErrors.length !== 0 ){
-            return res.status(400).json({errors: imageErrors});
-        }else{
-            const newPath = __dirname + `/../client/build/images/${files.image.name}`;
-            fs.copyFile(files.image.path, newPath, async(error)=>{
-                if(!error){
-                    try {
-                        const response = await Post.findByIdAndUpdate(id, {image: files.image.name});
-                        return res.status(200).json({msg: 'Your image has been updated successfuly'});
-                    } catch (error) {
-                        return res.status(500).json({errors: error, msg: error.message});
-                    }
-                }
-            })           
-        }
-    })
-}
+module.exports.updateImage = (req, res) => {
+	const form = formidable({ multiples: true });
+	form.parse(req, (errors, fields, files) => {
+		const { id } = fields;
+		const imageErrors = [];
+		if (Object.keys(files).length === 0) {
+			imageErrors.push({ msg: 'Please choose image' });
+		} else {
+			const { type } = files.image;
+			const split = type.split('/');
+			const extension = split[1].toLowerCase();
+			if (extension !== 'jpg' && extension !== 'jpeg' && extension !== 'png') {
+				imageErrors.push({ msg: `${extension} is not a valid extension` });
+			} else {
+				files.image.name = uuidv4() + '.' + extension;
+			}
+		}
+		if (imageErrors.length !== 0) {
+			return res.status(400).json({ errors: imageErrors });
+		} else {
+			const newPath = __dirname + `/../client/build/images/${files.image.name}`;
+			fs.copyFile(files.image.path, newPath, async (error) => {
+				if (!error) {
+					try {
+						const response = await Post.findByIdAndUpdate(id, {
+							image: files.image.name,
+						});
+						return res.status(200).json({ msg: 'Your image has been updated' });
+					} catch (error) {
+						return res.status(500).json({ errors: error, msg: error.message });
+					}
+				}
+			});
+		}
+	});
+};
 
 module.exports.deletePost = async (req, res)=>{
     const id = req.params.id;
