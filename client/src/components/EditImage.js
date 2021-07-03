@@ -13,9 +13,8 @@ const EditImage = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
     const{push}=useHistory();
-
     const {updateImageErrors}= useSelector((state)=>state.UpdateImage);
-    const {redirect} = useSelector((state)=>state.PostReducer);
+    const {redirect, loading} = useSelector((state)=>state.PostReducer);
     const [state, setState] = useState({
         
         image: '',
