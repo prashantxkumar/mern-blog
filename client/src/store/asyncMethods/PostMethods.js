@@ -138,7 +138,6 @@ export const homePosts = (page)=>{
             dispatch({type: SET_POSTS, payload:{response, count, perPage}})
 
         } catch (error) {
-            console.log(error);
             dispatch({ type: CLOSE_LOADER })
         }
     }
