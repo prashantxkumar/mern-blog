@@ -52,7 +52,7 @@ const Home = ()=>{
                                             <Link to={`/details/${post.slug}`}>{post.title}</Link>
                                         </h1>
                                         <div className="post__body__details">
-                                            {ReactHtmlParser(post.body.slice(0, 300))}
+                                            {ReactHtmlParser(post.body.slice(0, 200))}
                                         </div>
                                     </div>
                                 </div>
