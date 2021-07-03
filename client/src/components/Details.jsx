@@ -9,6 +9,7 @@ import moment from 'moment';
 import {postComment } from "../store/asyncMethods/PostMethods";
 import toast, {Toaster} from "react-hot-toast";
 import {RESET_COMMENT_ERROR} from "../store/types/PostTypes";
+import { htmlToText } from 'html-to-text';
 var h2p = require('html2plaintext');
 
 const Details = ()=>{
@@ -68,7 +69,7 @@ const Details = ()=>{
                                 {details.title}
                             </h1>
                             <div className="post__body__details">
-                                {h2p(details.body)}
+                                {htmlToText(details.body)}
                             </div>
                             <div className="post__body__image">
                                 <img src={`/images/${details.image}`} alt="img"/>
