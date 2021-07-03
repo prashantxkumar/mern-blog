@@ -112,18 +112,7 @@ module.exports.fetchPost = async (req, res) => {
 
 module.exports.updateValidations = [
 	body('title').notEmpty().trim().withMessage('Title is required'),
-	body('body')
-		.notEmpty()
-		.trim()
-		.custom((value) => {
-			let bodyValue = value.replace(/\n/g, '');
-			if (htmlToText(bodyValue).trim().length === 0) {
-				return false;
-			} else {
-				return true;
-			}
-		})
-		.withMessage('Body is required'),
+	body('body').notEmpty().trim().withMessage('Body is required'),
 	body('description').notEmpty().trim().withMessage('Description is required'),
 ];
 module.exports.updatePost = async (req, res) => {
