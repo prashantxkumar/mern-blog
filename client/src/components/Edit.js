@@ -1,14 +1,18 @@
-import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
-import {useParams, useHistory} from "react-router-dom";
+import { useState, useEffect } from 'react';
+import Helmet from 'react-helmet';
+import { useParams, useHistory } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import {useSelector, useDispatch} from "react-redux";
-import { fetchPost, updateAction } from "../store/asyncMethods/PostMethods";
-import { POST_RESET, RESET_UPDATE_ERRORS } from "../store/types/PostTypes";
-import toast, {Toaster} from "react-hot-toast";
-import Loader from "./Loader";
-const Edit = ()=>{
+import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPost, updateAction } from '../store/asyncMethods/PostMethods';
+import {
+	POST_RESET,
+	RESET_UPDATE,
+	RESET_UPDATE_ERRORS,
+} from '../store/types/PostTypes';
+import Loader from './Loader';
+const Edit = () => {
 	const { push } = useHistory();
 	const { id } = useParams();
 	const [value, setValue] = useState('');
@@ -44,10 +48,10 @@ const Edit = ()=>{
 		);
 	};
 	useEffect(() => {
-		if (editErrors.length > 0) {
+		if (editErrors.length !== 0) {
 			editErrors.map((error) => toast.error(error.msg));
-            dispatch({ type: RESET_UPDATE_ERRORS });
-        }
+			dispatch({ type: RESET_UPDATE_ERRORS });
+		}
 	}, [editErrors]);
 	useEffect(() => {
 		if (redirect) {

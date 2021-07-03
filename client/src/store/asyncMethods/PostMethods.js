@@ -70,8 +70,8 @@ export const fetchPost = (id) => {
 	};
 };
 
-export const updateAction = (editData)=>{
-    return async (dispatch, getState)=>{
+export const updateAction = (editData) => {
+	return async (dispatch, getState) => {
 		const {
 			AuthReducer: { token },
 		} = getState();
@@ -80,28 +80,24 @@ export const updateAction = (editData)=>{
 				Authorization: `Bearer ${token}`,
 			},
 		};
-        dispatch({type: SET_LOADER});
-        try {
-            const {data} = await axios.post("/update", editData, config);
-            dispatch({type: CLOSE_LOADER});
-            dispatch({type: REDIRECT_TRUE});
-            dispatch({type: SET_MESSAGE, payload: data.msg});
-        } catch (error) {
-
-            const {
-                response: {
-                    data: {
-                        errors
-                    }
-                }
-            } = error;
-
-            dispatch({type: CLOSE_LOADER});
-            dispatch({type:SET_UPDATE_ERRORS, payload: errors})
-            console.log(error.response);
-        }
-    }
-}
+		dispatch({ type: SET_LOADER });
+		try {
+			const { data } = await axios.post('/update', editData, config);
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: REDIRECT_TRUE });
+			dispatch({ type: SET_MESSAGE, payload: data.msg });
+		} catch (error) {
+			const {
+				response: {
+					data: { errors },
+				},
+			} = error;
+			dispatch({ type: CLOSE_LOADER });
+			dispatch({ type: SET_UPDATE_ERRORS, payload: errors });
+			console.log(error.response);
+		}
+	};
+};
 
 export const updateImageAction = (updateData)=>{
     return async (dispatch, getState)=>{
