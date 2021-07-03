@@ -1,5 +1,4 @@
-  
-import { Helmet } from 'react-helmet';
+  import { Helmet } from 'react-helmet';
 import { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
