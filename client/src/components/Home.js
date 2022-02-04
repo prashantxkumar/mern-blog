@@ -63,7 +63,7 @@ const Home = ()=>{
                                 </div>
                             </div>
                         </div>
-                    )) : 'No Post to display': <Loader/>}
+                    )) : <h1>No Post to display</h1>: <Loader/>}
                 </div>
             </div>
             <div className="row">

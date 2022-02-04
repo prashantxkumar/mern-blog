@@ -91,7 +91,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                     )) 
-                    : "You dont have any post" 
+                    : <h1>You dont have any post</h1> 
                     : <Loader/>}
                     <Pagination path='dashboard' page={page} perPage={perPage} count={count}/>
                 </div>
