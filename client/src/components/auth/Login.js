@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-// import BgImage from './BgImage';
+import BgImage from './BgImage';
 import {useState, useEffect} from "react";
 import { postLogin } from "../../store/asyncMethods/AuthMethods"
 import { useSelector, useDispatch } from "react-redux";
@@ -44,7 +44,7 @@ const Login = ()=>{
 			</Helmet>
 			<div className='row mt-80'>
 				<div className='col-8'>
-					{/* <BgImage /> */}
+					<BgImage />
 					<Toaster
 						position='top-right'
 						reverseOrder={false}

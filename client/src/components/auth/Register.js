@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch, useSelector } from "react-redux";
 import toast, {Toaster} from "react-hot-toast";
-import { postRegister } from "../../store/asyncMethods/AuthMethods"
+import { postRegister } from "../../store/asyncMethods/AuthMethods";
+import BgImage from './BgImage';
+
 const Register = (props)=>{
 
     const [state, setState]=useState({
@@ -49,7 +51,7 @@ const Register = (props)=>{
 			</Helmet>
 			<div className='row mt-80'>
 				<div className='col-8'>
-					{/* <BgImage /> */}
+					<BgImage />
 					<Toaster
 						position='top-right'
 						reverseOrder={false}
