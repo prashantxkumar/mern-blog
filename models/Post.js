@@ -28,7 +28,17 @@ const postSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'user'
-    }
+    },
+    avatar: {
+        public_id: {
+          type: String,
+          required: true,
+        },
+        url: {
+          type: String,
+          required: true,
+        },
+      },
 }, {  timestamps: true });
 
 module.exports = model("post", postSchema);
