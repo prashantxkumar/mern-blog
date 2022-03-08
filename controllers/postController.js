@@ -61,7 +61,7 @@ module.exports.createPost = (req, res) => {
                 const response = await Post.create({
                   title,
                   body,
-                  image: files.image.name,
+                  image: "image",
                   description,
                   slug,
                   userName: name,
