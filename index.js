@@ -6,7 +6,6 @@ const path = require('path');
 const router = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
 const profileRoutes = require("./routes/profileRoutes");
-const cloudinary = require("cloudinary");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 8000;
